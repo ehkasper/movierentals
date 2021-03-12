@@ -1,5 +1,6 @@
 package com.movierental.integration;
 
+import com.movierental.users.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,10 @@ public class UsersCreationIntegrationTest extends IntegrationTest {
         Map<String, String> newUser = new HashMap<>();
         newUser.put("username", "usertest");
         newUser.put("password", "password");
-        ResponseEntity response = testRestTemplate.postForEntity(createURLWithPort("/users"), newUser, String.class);
+        ResponseEntity<User> response = testRestTemplate.postForEntity(createURLWithPort("/users"), newUser, User.class);
 
+        User expected = new User("usertest", "password", true);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+        assertEquals(expected.getUsername(), response.getBody().getUsername());
     }
 }

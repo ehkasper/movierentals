@@ -11,14 +11,13 @@ class AuthenticationIntegrationTest extends IntegrationTest {
 
 	@Test
 	void shouldReturnUnauthorizedWhenGettingSecuredEndpoint() {
-		ResponseEntity<Object> response = unauthenticatedRequest().getForEntity(createURLWithPort("/users"), Object.class);
+		ResponseEntity<Object> response = unauthenticatedRequest().getForEntity(createURLWithPort("/movies"), Object.class);
 		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 	}
 
 	@Test
 	void shouldReturnAuthorizedWhenSendingUserCredentials() {
-		ResponseEntity<Object> response = authenticatedRequest()
-				.getForEntity(createURLWithPort("/users"), Object.class);
+		ResponseEntity<Object> response = authenticatedRequest().getForEntity(createURLWithPort("/movies"), Object.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 

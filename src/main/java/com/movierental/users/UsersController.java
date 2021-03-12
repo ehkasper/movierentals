@@ -1,7 +1,9 @@
 package com.movierental.users;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,14 +12,20 @@ import static java.util.Arrays.asList;
 
 @RestController
 public class UsersController {
-    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<List<User>> users() {
-        return ResponseEntity.ok(asList(new User("user1", "password", true)));
-    }
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<String> save(@RequestBody UserRequest userRequest) {
-        return ResponseEntity.accepted().body("user created");
+    public @ResponseBody ResponseEntity<User> save(@RequestBody UserRequest userRequest) {
+        User newUser = new User();
+        newUser.setUsername(userRequest.getUsername());
+        newUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        newUser.setEnabled(true);
+        User user = userRepository.save(newUser);
+        return ResponseEntity.accepted().body(user);
     }
 
     static class UserRequest {
