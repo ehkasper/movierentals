@@ -13,4 +13,12 @@ class AuthenticationIntegrationTest extends IntegrationTest {
 		ResponseEntity<Object> response = testRestTemplate.getForEntity(createURLWithPort("/users"), Object.class);
 		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 	}
+
+	@Test
+	void shouldReturnAuthorizedWhenSendingUserCredentials() {
+		ResponseEntity<Object> response = testRestTemplate
+				.withBasicAuth("user1", "123456")
+				.getForEntity(createURLWithPort("/users"), Object.class);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
 }
