@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RentalsIntegrationTest extends IntegrationTest {
 
@@ -47,8 +48,9 @@ public class RentalsIntegrationTest extends IntegrationTest {
                 .postForEntity(createURLWithPort("/rentals/takeout"), request, Rental.class);
         Rental rental = response.getBody();
 
-        Rental expected = new Rental(rental.getId(), user.getUsername(), movie.getId(), rental.getCreatedAt(), rental.getStatus());
+        Rental expected = new Rental(rental.getId(), user.getUsername(), movie.getId(), rental.getCreatedAt(), "RENT");
 
+        assertNotNull(rental.getCreatedAt());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expected, rental);
     }

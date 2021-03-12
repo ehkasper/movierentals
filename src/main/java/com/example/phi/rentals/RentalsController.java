@@ -1,28 +1,31 @@
 package com.example.phi.rentals;
 
-import com.example.phi.movies.Movie;
-import com.example.phi.movies.MovieRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
-import java.util.List;
 
 @RestController
 public class RentalsController {
+    public static final String STATUS_RENT = "RENT";
     @Autowired
     RentalsRepository rentalsRepository;
 
     @PostMapping(value = "/rentals/takeout", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Rental> save(@RequestBody RentalRequest rentalRequest) {
+    public @ResponseBody ResponseEntity<Rental> save(HttpServletRequest httpServletRequest, @RequestBody RentalRequest rentalRequest) {
         Rental rental = new Rental();
-        rental.setUsername("user1");
+        rental.setUsername(httpServletRequest.getRemoteUser());
         rental.setMovieId(rentalRequest.getMovieId());
         rental.setCreatedAt(java.sql.Timestamp.from(Instant.now()));
-        rental.setStatus("rent");
+        rental.setStatus(STATUS_RENT);
+
         Rental rentalCreated = rentalsRepository.save(rental);
 
         return ResponseEntity.ok().body(rentalCreated);
