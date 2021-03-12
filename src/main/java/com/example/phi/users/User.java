@@ -1,4 +1,4 @@
-package com.example.phi;
+package com.example.phi.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

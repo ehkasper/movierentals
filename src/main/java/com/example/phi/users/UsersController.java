@@ -1,4 +1,4 @@
-package com.example.phi;
+package com.example.phi.users;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
