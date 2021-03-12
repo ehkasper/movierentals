@@ -1,4 +1,4 @@
-package com.example.phi.movies;
+package com.movierental.movies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 @RestController
 public class MoviesController {

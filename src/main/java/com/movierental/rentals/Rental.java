@@ -1,7 +1,6 @@
-package com.example.phi.rentals;
+package com.movierental.rentals;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Objects;
 
 @Entity

@@ -1,6 +1,5 @@
-package com.example.phi.users;
+package com.movierental.users;
 
-import com.example.phi.movies.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

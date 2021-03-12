@@ -1,4 +1,4 @@
-package com.example.phi.integration;
+package com.movierental.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.client.TestRestTemplate;

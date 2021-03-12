@@ -1,4 +1,4 @@
-package com.example.phi.users;
+package com.movierental.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

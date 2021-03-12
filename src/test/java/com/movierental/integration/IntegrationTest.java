@@ -1,4 +1,4 @@
-package com.example.phi.integration;
+package com.movierental.integration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

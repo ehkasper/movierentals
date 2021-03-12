@@ -1,4 +1,4 @@
-package com.example.phi.movies;
+package com.movierental.movies;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

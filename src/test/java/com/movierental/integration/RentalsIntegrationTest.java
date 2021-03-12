@@ -1,23 +1,21 @@
-package com.example.phi.integration;
+package com.movierental.integration;
 
-import com.example.phi.movies.Movie;
-import com.example.phi.movies.MovieRepository;
-import com.example.phi.rentals.Rental;
-import com.example.phi.rentals.RentalsRepository;
-import com.example.phi.users.User;
-import com.example.phi.users.UserRepository;
+import com.movierental.movies.Movie;
+import com.movierental.movies.MovieRepository;
+import com.movierental.rentals.Rental;
+import com.movierental.rentals.RentalsRepository;
+import com.movierental.users.User;
+import com.movierental.users.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

@@ -1,4 +1,4 @@
-package com.example.phi.rentals;
+package com.movierental.rentals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javassist.NotFoundException;

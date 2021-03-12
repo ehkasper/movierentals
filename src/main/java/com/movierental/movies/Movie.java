@@ -1,4 +1,4 @@
-package com.example.phi.movies;
+package com.movierental.movies;
 
 import javax.persistence.*;
 import java.util.Objects;
