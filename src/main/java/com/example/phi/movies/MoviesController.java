@@ -16,7 +16,8 @@ public class MoviesController {
 
     @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<List<Movie>> movies() {
-        return ResponseEntity.ok(asList(new Movie(1, "titanic", "james cameron")));
+        List<Movie> movies = movieRepository.findAll();
+        return ResponseEntity.ok(movies);
     }
 
     @PostMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
