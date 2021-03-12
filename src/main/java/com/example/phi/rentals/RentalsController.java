@@ -1,6 +1,7 @@
 package com.example.phi.rentals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
+import java.util.Optional;
 
 @RestController
 public class RentalsController {
@@ -33,8 +35,12 @@ public class RentalsController {
     }
 
     @PostMapping(value = "/rentals/return", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Rental> save(@RequestBody ReturnRequest returnRequest) {
-        Rental rental = rentalsRepository.findById(returnRequest.getRentalId()).get();
+    public @ResponseBody ResponseEntity<Rental> save(@RequestBody ReturnRequest returnRequest) throws NotFoundException {
+        Optional<Rental> optionalRental = rentalsRepository.findById(returnRequest.getRentalId());
+        if (!optionalRental.isPresent()) {
+            throw new NotFoundException("movie not found");
+        }
+        Rental rental = optionalRental.get();
         rental.setStatus(STATUS_RETURNED);
 
         Rental rentalUpdated = rentalsRepository.save(rental);

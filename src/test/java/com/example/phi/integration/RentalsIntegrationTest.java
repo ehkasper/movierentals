@@ -73,4 +73,14 @@ public class RentalsIntegrationTest extends IntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expected, rental);
     }
+    @Test
+    public void shouldNotReturnAMovieWhenItDoesNotExist() {
+        Map<String, String> request = new HashMap<>();
+        request.put("rental_id", "randomvalue");
+
+        ResponseEntity response = authenticatedRequest()
+                .postForEntity(createURLWithPort("/rentals/return"), request, Object.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
 }
