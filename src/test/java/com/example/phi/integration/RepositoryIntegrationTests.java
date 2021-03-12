@@ -1,5 +1,7 @@
-package com.example.phi;
+package com.example.phi.integration;
 
+import com.example.phi.User;
+import com.example.phi.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

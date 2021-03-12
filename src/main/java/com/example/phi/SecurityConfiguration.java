@@ -1,6 +1,7 @@
 package com.example.phi;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -11,8 +12,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .httpBasic()
                 .and()
-                .authorizeRequests()
-//                .antMatchers("/index.html", "/", "/home", "/login").permitAll()
-                .anyRequest().authenticated();
+            .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/users").authenticated()
+        .and()
+            .csrf().disable();
     }
 }
