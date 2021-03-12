@@ -1,5 +1,7 @@
 package com.example.phi;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +11,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("password")
     private String password;
 
     public User() {}
