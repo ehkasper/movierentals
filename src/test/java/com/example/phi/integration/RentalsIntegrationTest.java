@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,5 +57,20 @@ public class RentalsIntegrationTest extends IntegrationTest {
         assertEquals(expected, rental);
     }
 
+    @Test
+    public void shouldReturnAMovie() {
+        rentalsRepository.save(new Rental(1, user.getUsername(), movie.getId(), java.sql.Timestamp.from(Instant.now()), "RENT"));
+        Rental rentalRequest = rentalsRepository.findAll().get(0);
+        Map<String, String> request = new HashMap<>();
+        request.put("rental_id", String.valueOf(rentalRequest.getId()));
 
+        ResponseEntity<Rental> response = authenticatedRequest()
+                .postForEntity(createURLWithPort("/rentals/return"), request, Rental.class);
+        Rental rental = response.getBody();
+
+        Rental expected = new Rental(rentalRequest.getId(), user.getUsername(), movie.getId(), rental.getCreatedAt(), "RETURNED");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expected, rental);
+    }
 }

@@ -15,6 +15,7 @@ import java.time.Instant;
 @RestController
 public class RentalsController {
     public static final String STATUS_RENT = "RENT";
+    public static final String STATUS_RETURNED = "RETURNED";
     @Autowired
     RentalsRepository rentalsRepository;
 
@@ -29,6 +30,36 @@ public class RentalsController {
         Rental rentalCreated = rentalsRepository.save(rental);
 
         return ResponseEntity.ok().body(rentalCreated);
+    }
+
+    @PostMapping(value = "/rentals/return", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<Rental> save(@RequestBody ReturnRequest returnRequest) {
+        Rental rental = rentalsRepository.findById(returnRequest.getRentalId()).get();
+        rental.setStatus(STATUS_RETURNED);
+
+        Rental rentalUpdated = rentalsRepository.save(rental);
+
+        return ResponseEntity.ok().body(rentalUpdated);
+    }
+
+    static class ReturnRequest {
+
+        private long rental_id;
+
+        public ReturnRequest() {}
+
+        public ReturnRequest(long rentalId) {
+            this.rental_id = rentalId;
+        }
+
+        @JsonProperty("rental_id")
+        public long getRentalId() {
+            return rental_id;
+        }
+
+        public void setRentalId(long rentalId) {
+            this.rental_id = rentalId;
+        }
     }
 
     static class RentalRequest {
