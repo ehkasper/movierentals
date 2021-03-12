@@ -30,3 +30,15 @@ CREATE TABLE movies (
 
 INSERT INTO movies(title, director) VALUES
     ('titanic', 'james cameron');
+
+DROP TABLE IF EXISTS rentals;
+
+CREATE TABLE rentals (
+    id int auto_increment primary key,
+    username varchar(250) not null,
+    movie_id int not null,
+    created_at timestamp not null default current_timestamp(),
+    status varchar(100) not null,
+    constraint fk_rentals_users foreign key(username) references users(username),
+	constraint fk_rentals_movies foreign key(movie_id) references movies(id)
+);

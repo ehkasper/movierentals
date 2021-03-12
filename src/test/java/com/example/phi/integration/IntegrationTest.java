@@ -1,6 +1,7 @@
 package com.example.phi.integration;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -10,12 +11,8 @@ abstract class IntegrationTest {
     @LocalServerPort
     protected int port;
 
+    @Autowired
     protected TestRestTemplate testRestTemplate;
-
-    @BeforeEach
-    public void setUp() {
-        testRestTemplate = new TestRestTemplate();
-    }
 
     protected TestRestTemplate authenticatedRequest() {
         return testRestTemplate
