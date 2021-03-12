@@ -26,7 +26,9 @@ public class MoviesIntegrationTest extends IntegrationTest {
 
     @Test
     public void shouldRetrieveListOfMovies() {
-        ResponseEntity<Movie[]> response = testRestTemplate.getForEntity(createURLWithPort("/movies"), Movie[].class);
+        ResponseEntity<Movie[]> response = testRestTemplate
+                .withBasicAuth("user1", "123456")
+                .getForEntity(createURLWithPort("/movies"), Movie[].class);
         Movie[] movies = response.getBody();
 
         List<Movie> expected = asList(new Movie(1, "titanic", "james cameron"));
@@ -42,7 +44,9 @@ public class MoviesIntegrationTest extends IntegrationTest {
         newMovie.put("title", "movie1");
         newMovie.put("director", "director1");
 
-        ResponseEntity<Movie> response = testRestTemplate.postForEntity(createURLWithPort("/movies"), newMovie, Movie.class);
+        ResponseEntity<Movie> response = testRestTemplate
+                .withBasicAuth("user1", "123456")
+                .postForEntity(createURLWithPort("/movies"), newMovie, Movie.class);
 
         Movie expected = new Movie();
         expected.setTitle("movie1");
