@@ -1,14 +1,24 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS authorities;
 
-CREATE TABLE users (
-  id int auto_increment primary key,
-  username VARCHAR(250) NOT NULL,
-  password VARCHAR(250) NOT NULL
-
+create table users(
+	username varchar(250) not null primary key,
+	password varchar(250) not null,
+	enabled boolean not null default true
 );
 
+create table authorities (
+	username varchar(250) not null,
+	authority varchar(250) not null,
+	constraint fk_authorities_users foreign key(username) references users(username)
+);
+create unique index ix_auth_username on authorities (username,authority);
+
 INSERT INTO users (username, password) VALUES
-  ('user1', '123456');
+  ('user1', '$2a$10$i4PbAabua2jYkrcLEHRLGOKqraLwldmfWqt1/D.pR/Weh4JK2SotG');
+
+INSERT INTO authorities (username, authority) VALUES
+  ('user1', 'ROLE_ADMIN');
 
 DROP TABLE IF EXISTS movies;
 

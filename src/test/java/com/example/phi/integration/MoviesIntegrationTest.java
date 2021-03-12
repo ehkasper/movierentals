@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -26,8 +27,7 @@ public class MoviesIntegrationTest extends IntegrationTest {
 
     @Test
     public void shouldRetrieveListOfMovies() {
-        ResponseEntity<Movie[]> response = testRestTemplate
-                .withBasicAuth("user1", "123456")
+        ResponseEntity<Movie[]> response = authenticatedRequest()
                 .getForEntity(createURLWithPort("/movies"), Movie[].class);
         Movie[] movies = response.getBody();
 
@@ -44,8 +44,7 @@ public class MoviesIntegrationTest extends IntegrationTest {
         newMovie.put("title", "movie1");
         newMovie.put("director", "director1");
 
-        ResponseEntity<Movie> response = testRestTemplate
-                .withBasicAuth("user1", "123456")
+        ResponseEntity<Movie> response = authenticatedRequest()
                 .postForEntity(createURLWithPort("/movies"), newMovie, Movie.class);
 
         Movie expected = new Movie();

@@ -10,12 +10,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
+    DataSource dataSource;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user1").password(passwordEncoder().encode("123456")).authorities("ROLE_USER");
+        auth.jdbcAuthentication().dataSource(dataSource);
     }
 
     @Bean
@@ -27,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .httpBasic()
-                .and()
+        .and()
             .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/users").authenticated()
                 .antMatchers("/movies").authenticated()

@@ -12,7 +12,7 @@ import static java.util.Arrays.asList;
 public class UsersController {
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<List<User>> users() {
-        return ResponseEntity.ok(asList(new User(1, "user1", "password")));
+        return ResponseEntity.ok(asList(new User("user1", "password", true)));
     }
 
     @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)

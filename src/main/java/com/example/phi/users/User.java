@@ -7,26 +7,26 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
 
+    @Id
     @JsonProperty("username")
     private String username;
 
     @JsonProperty("password")
     private String password;
 
+    private boolean enabled;
+
     public User() {}
 
-    public User(long id, String username, String password) {
-        this.id = id;
+    public User(String username, String password, boolean enabled) {
+        this.enabled = enabled;
         this.username = username;
         this.password = password;
     }
 
-    public long getId() {
-        return id;
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public String getUsername() {
@@ -41,8 +41,8 @@ public class User {
         return password;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setPassword(String password) {

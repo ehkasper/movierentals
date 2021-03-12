@@ -17,6 +17,11 @@ abstract class IntegrationTest {
         testRestTemplate = new TestRestTemplate();
     }
 
+    protected TestRestTemplate authenticatedRequest() {
+        return testRestTemplate
+                .withBasicAuth("user1", "123456");
+    }
+
     protected String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
