@@ -13,8 +13,8 @@ public class MoviesController {
     MovieRepository movieRepository;
 
     @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<List<Movie>> movies() {
-        List<Movie> movies = movieRepository.findAll();
+    public @ResponseBody ResponseEntity<List<Movie>> movies(@RequestParam(value = "title", required = false)  String title) {
+        List<Movie> movies = movieRepository.findByTitleContainingIgnoringCase(title == null ? "" : title);
         return ResponseEntity.ok(movies);
     }
 

@@ -3,6 +3,7 @@ package com.movierental.integration;
 import com.movierental.movies.Movie;
 import com.movierental.movies.MovieRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,27 @@ public class MoviesIntegrationTest extends IntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expected, titanic);
+    }
+
+    @Test
+    public void shouldFilterMoviesByTitleAndFindNoneWhenNoneExist() {
+        ResponseEntity<Movie[]> response = authenticatedRequest()
+                .getForEntity(createURLWithPort("/movies?title=matrix"), Movie[].class);
+        Movie[] movies = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(0, movies.length);
+    }
+
+
+    @Test
+    public void shouldFilterMoviesByTitleAndFindOneIgnoringCase() {
+        ResponseEntity<Movie[]> response = authenticatedRequest()
+                .getForEntity(createURLWithPort("/movies?title=TITANIC"), Movie[].class);
+        Movie[] movies = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1, movies.length);
     }
 
     @Test
